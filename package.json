@@ -1,0 +1,27 @@
+{
+  "name": "code-to-image",
+  "version": "1.0.0",
+  "description": "",
+  "main": "codeConvertor.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zencaaw/code-to-image.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/zencaaw/code-to-image/issues"
+  },
+  "homepage": "https://github.com/zencaaw/code-to-image#readme",
+  "dependencies": {
+    "bwip-js": "^4.8.0",
+    "express": "^5.2.1",
+    "jszip": "^3.10.1"
+  }
+}

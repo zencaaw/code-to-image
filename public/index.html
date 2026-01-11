@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <script src="codeConvertor.js"></script>
+    <title>Code to Image</title>
+</head>
+<body>
+    <main style="margin: 100px;">
+        <h1>Code to Image</h1>
+        <label for="codes">
+            Code(s)
+            <textarea name="codes" type="text" placeholder="Veuillez rentrer un ou plusieurs code(s)"></textarea>
+        </label>
+        <label for="split">
+            Séparation
+            <select name="splitSelect" aria-label="Choisissez la séparation entre les codes">
+                <option value="," selected>,</option>
+                <option value="/" >/</option>
+            </select>
+        </label>
+        <label for="codeType">
+            <select name="codeTypeSelect" aria-label="Choisissez le type de code">
+                <option value="code128" selected>Code128</option>
+                <option value="datamatrix" >DataMatrix</option>
+                <option value="qrcode">QRCode</option>
+            </select>
+        </label>
+        <button type="button" onclick="generateCodes()">Générer</button>
+    </main>
+</body>
+</html>
