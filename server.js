@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const bwipjs = require('bwip-js');
 const JSZip = require('jszip');
+const { error } = require('console');
 
 const app = express()
 app.use(express.json());
@@ -24,8 +25,7 @@ app.post('/generate', async (req, res) => {
                 includetext: true
             });
 
-            const safeName = code.replace(/[^a-z0-9-_]/gi, '_');
-            zip.file(`${safeName}.png`, png);
+            zip.file(`${code}.png`, png);
         });
 
         await Promise.all(promises);
@@ -36,7 +36,7 @@ app.post('/generate', async (req, res) => {
         res.setHeader('Content-Disposition', 'attachment; filename=codes.zip');
         res.send(buffer);
     } catch(e) {
-        alert(e);
+        throw new Error("Erreur interne du serveur !");
     }
 })
 
