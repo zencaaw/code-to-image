@@ -2,7 +2,6 @@ const express = require('express');
 const path = require('path');
 const bwipjs = require('bwip-js');
 const JSZip = require('jszip');
-const { error } = require('console');
 
 const app = express()
 app.use(express.json());
@@ -12,12 +11,10 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.post('/generate', async (req, res) => {
     try {
-        const { codes, splitSelect, codeTypeSelect } = req.body;
+        const { codes, codeTypeSelect } = req.body;
         const zip = new JSZip();
-
-        const codeArray = codes.split(splitSelect);
         
-        const promises = codeArray.map(async (code) => {
+        const promises = codes.map(async (code) => {
             const png = await bwipjs.toBuffer({
                 bcid: codeTypeSelect,
                 text: code.trim(),

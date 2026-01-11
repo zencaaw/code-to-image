@@ -10,11 +10,14 @@ async function generateCodes() {
             generateButton.disabled = true;
             const progress = document.createElement("progress");
             main.appendChild(progress);
+            const codeArray = codes.value.split(splitSelect.value)
+
             const res = await fetch('/generate', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({codes: codes.value, splitSelect: splitSelect.value, codeTypeSelect: codeTypeSelect.value})
+                body: JSON.stringify({codes: codeArray, codeTypeSelect: codeTypeSelect.value})
             })
+
 
             if (!res.ok) {
                 throw new Error(`Erreur du serveur: ${res.status} ${res.statusText}`);
