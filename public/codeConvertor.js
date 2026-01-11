@@ -5,7 +5,7 @@ async function generateCodes() {
     const main = document.getElementsByTagName("main")[0];
     const generateButton = document.getElementById("generateButton");
 
-    if (codes !== "") {
+    if (codes.value !== "") {
         try {
             generateButton.disabled = true;
             const progress = document.createElement("progress");

@@ -34,7 +34,7 @@ app.post('/generate', async (req, res) => {
     
         res.setHeader('Content-Type', 'application/zip');
         res.setHeader('Content-Disposition', 'attachment; filename=codes.zip');
-        res.send(buffer);
+        res.status(200).send(buffer);
     } catch(e) {
         throw new Error("Erreur interne du serveur !");
     }
