@@ -16,16 +16,24 @@
         </label>
         <label for="split">
             Séparation
-            <select name="splitSelect" aria-label="Choisissez la séparation entre les codes">
+            <select name="splitSelect">
                 <option value="," selected>,</option>
                 <option value="/" >/</option>
             </select>
         </label>
         <label for="codeType">
-            <select name="codeTypeSelect" aria-label="Choisissez le type de code">
+            Type d'image
+            <select name="codeTypeSelect">
                 <option value="code128" selected>Code128</option>
                 <option value="datamatrix" >DataMatrix</option>
                 <option value="qrcode">QRCode</option>
+            </select>
+        </label>
+        <label for="fileFormat">
+            Format d'image
+            <select name="fileFormatSelect">
+                <option value="png" selected>.png</option>
+                <option value="gif" >.gif</option>
             </select>
         </label>
         <button id="generateButton" type="button" onclick="generateCodes()">Générer</button>

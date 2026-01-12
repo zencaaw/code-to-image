@@ -11,18 +11,18 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.post('/generate', async (req, res) => {
     try {
-        const { codes, codeTypeSelect } = req.body;
+        const { codes, codeTypeSelected, fileFormatSelected } = req.body;
         const zip = new JSZip();
         
         const promises = codes.map(async (code) => {
-            const png = await bwipjs.toBuffer({
-                bcid: codeTypeSelect,
+            const img = await bwipjs.toBuffer({
+                bcid: codeTypeSelected,
                 text: code.trim(),
                 scale: 5,
                 includetext: true
             });
 
-            zip.file(`${code}.png`, png);
+            zip.file(`${code}.${fileFormatSelected}`, img);
         });
 
         await Promise.all(promises);

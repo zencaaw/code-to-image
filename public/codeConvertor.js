@@ -2,6 +2,7 @@ async function generateCodes() {
     const codes = document.getElementsByName("codes")[0];
     const splitSelect = document.getElementsByName("splitSelect")[0];
     const codeTypeSelect = document.getElementsByName("codeTypeSelect")[0];
+    const fileFormatSelect = document.getElementsByName("fileFormatSelect")[0];
     const main = document.getElementsByTagName("main")[0];
     const generateButton = document.getElementById("generateButton");
 
@@ -15,7 +16,7 @@ async function generateCodes() {
             const res = await fetch('/generate', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({codes: codeArray, codeTypeSelect: codeTypeSelect.value})
+                body: JSON.stringify({codes: codeArray, codeTypeSelected: codeTypeSelect.value, fileFormatSelected: fileFormatSelect.value})
             })
 
 
