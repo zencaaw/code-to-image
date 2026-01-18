@@ -8,29 +8,29 @@ async function generateCodes(e) {
     const codes = form.elements["codes"];
     
     if (codes.value !== "") {
+        generateButton.disabled = true;
+        main.appendChild(progress);
         try {
-            generateButton.disabled = true;
-            main.appendChild(progress);
             const codeArray = codes.value.split(form.elements["splitSelect"].value);
             const tempCanvas = document.createElement('canvas');
             const codeTypeSelect = form.elements["codeTypeSelect"].value;
             const fileFormatSelect = form.elements["fileFormatSelect"].value;
             const zip = new JSZip();
 
-            await Promise.all(codeArray.map(async (code) => {
+            for (const code of codeArray) {
                 bwipjs.toCanvas(tempCanvas, {
                     bcid: codeTypeSelect,
                     text: code.trim(),
                     scale: 5,
                     includetext: true
-                })
+                });
 
                 const blob = await new Promise((resolve) => {
                     tempCanvas.toBlob(resolve, `image/${fileFormatSelect}`);
                 });
 
                 zip.file(`${code}.${fileFormatSelect}`, blob);
-            }))
+            }
 
             const zipBlob = await zip.generateAsync({ type: 'blob' });
             const a = document.createElement('a');
