@@ -1,43 +1,48 @@
-async function generateCodes() {
-    const codes = document.getElementsByName("codes")[0];
-    const splitSelect = document.getElementsByName("splitSelect")[0];
-    const codeTypeSelect = document.getElementsByName("codeTypeSelect")[0];
-    const fileFormatSelect = document.getElementsByName("fileFormatSelect")[0];
-    const main = document.getElementsByTagName("main")[0];
-    const generateButton = document.getElementById("generateButton");
+async function generateCodes(e) {
+    e.preventDefault();
 
+    const form = e.target;
+    const generateButton = form.elements["generateButton"];
+    const main = document.getElementsByTagName("main")[0];
+    const progress = document.createElement("progress");
+    const codes = form.elements["codes"];
+    
     if (codes.value !== "") {
         try {
             generateButton.disabled = true;
-            const progress = document.createElement("progress");
             main.appendChild(progress);
-            const codeArray = codes.value.split(splitSelect.value)
+            const codeArray = codes.value.split(form.elements["splitSelect"].value);
+            const tempCanvas = document.createElement('canvas');
+            const codeTypeSelect = form.elements["codeTypeSelect"].value;
+            const fileFormatSelect = form.elements["fileFormatSelect"].value;
+            const zip = new JSZip();
 
-            const res = await fetch('/generate', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({codes: codeArray, codeTypeSelected: codeTypeSelect.value, fileFormatSelected: fileFormatSelect.value})
-            })
+            await Promise.all(codeArray.map(async (code) => {
+                bwipjs.toCanvas(tempCanvas, {
+                    bcid: codeTypeSelect,
+                    text: code.trim(),
+                    scale: 5,
+                    includetext: true
+                })
 
+                const blob = await new Promise((resolve) => {
+                    tempCanvas.toBlob(resolve, `image/${fileFormatSelect}`);
+                });
 
-            if (!res.ok) {
-                throw new Error(`Erreur du serveur: ${res.status} ${res.statusText}`);
-            }
-        
-            const blob = await res.blob()
-            const url = URL.createObjectURL(blob)
-        
-            const a = document.createElement('a')
-            a.href = url
-            a.download = 'codes.zip'
-            a.click()
-            URL.revokeObjectURL(url)
+                zip.file(`${code}.${fileFormatSelect}`, blob);
+            }))
+
+            const zipBlob = await zip.generateAsync({ type: 'blob' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(zipBlob);
+            a.download = 'codes.zip';
+            a.click();
+            URL.revokeObjectURL(a.href);
     
             codes.value = "";
-            generateButton.disabled = false;
-            main.removeChild(progress);
         } catch(e) {
             alert(e)
+        } finally {
             generateButton.disabled = false;
             main.removeChild(progress);
         }

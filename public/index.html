@@ -4,39 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bwip-js@3.0.4/dist/bwip-js-min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
     <script src="codeConvertor.js"></script>
     <title>Code to Image</title>
 </head>
 <body>
     <main style="margin: 100px;">
         <h1>Code to Image</h1>
-        <label for="codes">
-            Code(s)
-            <textarea name="codes" type="text" placeholder="Veuillez entrer un ou plusieurs code(s)"></textarea>
-        </label>
-        <label for="split">
-            Séparation
-            <select name="splitSelect">
-                <option value="," selected>,</option>
-                <option value="/" >/</option>
-            </select>
-        </label>
-        <label for="codeType">
-            Type d'image
-            <select name="codeTypeSelect">
-                <option value="code128" selected>Code128</option>
-                <option value="datamatrix" >DataMatrix</option>
-                <option value="qrcode">QRCode</option>
-            </select>
-        </label>
-        <label for="fileFormat">
-            Format d'image
-            <select name="fileFormatSelect">
-                <option value="png" selected>.png</option>
-                <option value="gif" >.gif</option>
-            </select>
-        </label>
-        <button id="generateButton" type="button" onclick="generateCodes()">Générer</button>
+        <form onsubmit="generateCodes(event)">
+            <label for="codes">
+                Code(s)
+                <textarea name="codes" type="text" placeholder="Veuillez entrer un ou plusieurs code(s)"></textarea>
+            </label>
+            <label for="split">
+                Séparation
+                <select name="splitSelect">
+                    <option value="," selected>,</option>
+                    <option value="/" >/</option>
+                </select>
+            </label>
+            <label for="codeType">
+                Type d'image
+                <select name="codeTypeSelect">
+                    <option value="code128" selected>Code128</option>
+                    <option value="datamatrix" >DataMatrix</option>
+                    <option value="qrcode">QRCode</option>
+                </select>
+            </label>
+            <label for="fileFormat">
+                Format d'image
+                <select name="fileFormatSelect">
+                    <option value="png" selected>.png</option>
+                    <option value="gif" >.gif</option>
+                </select>
+            </label>
+            <button type="submit" name="generateButton">Générer</button>
+        </form>
     </main>
 </body>
 </html>
